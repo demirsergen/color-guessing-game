@@ -1,23 +1,93 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+
+const getRandomColor = () => {
+  const hex = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ];
+
+  const color = new Array(6)
+    .fill("")
+    .map(() => hex[Math.floor(Math.random() * hex.length)])
+    .join("");
+
+  return `#${color}`;
+};
 
 function App() {
+  const [color, setColor] = useState("");
+  const [message, setMessage] = useState("");
+  const [displayedOptions, setDisplayedOptions] = useState([]);
+  const [score, setScore] = useState(0);
+  const [tryCount, setTryCount] = useState(0);
+
+  const newGame = () => {
+    const correctColor = getRandomColor();
+    setColor(correctColor);
+    setDisplayedOptions(
+      [correctColor, getRandomColor(), getRandomColor()].sort()
+    );
+  };
+
+  const checkAnswer = (chosenColor) => {
+    if (chosenColor === color) {
+      setMessage("Correct!");
+      setScore((prev) => prev + 1);
+      setTryCount((prev) => prev + 1);
+      newGame();
+    } else {
+      setMessage("Wrong!");
+      setTryCount((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    newGame();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="app__title">Color Guessing Game</h1>
+      <div className="game_container">
+        <div className="color_box" style={{ backgroundColor: color }}></div>
+        <div className="color_options-container">
+          {displayedOptions.map((color) => (
+            <button
+              key={color}
+              onClick={() => checkAnswer(color)}
+              className="option"
+            >
+              {color}
+            </button>
+          ))}
+        </div>
+        <h1 className={message === "Correct!" ? "correct" : "wrong"}>
+          {message}
+        </h1>
+        <div className="score__container">
+          <h1>Score: {score}</h1>
+          <h1>Tries: {tryCount}</h1>
+          <h1>
+            Success Rate:
+            {score > 0 ? ((score / tryCount) * 100).toFixed(0) : null}%
+          </h1>
+        </div>
+      </div>
     </div>
   );
 }
