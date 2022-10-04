@@ -31,6 +31,7 @@
 
 .option {
   padding: 10px 15px;
+  cursor: pointer;
 }
 
 .correct {
@@ -43,7 +44,29 @@
 
 .score__container {
   border: 1px solid gray;
-  margin: 1em 0;
+  max-width: 300px;
+  margin: 1em auto;
   padding: 1em;
   text-align: left;
+}
+
+.score__container h1 {
+  font-size: 1rem;
+  color: rgb(6, 114, 83);
+}
+
+.score__container h1>span {
+  color: white;
+}
+
+@media (min-width: 768px) {
+
+  .color_box{
+    width: 500px;
+  }
+
+  .score__container {
+    max-width: 300px;
+    margin: 0 auto;
+}
 }

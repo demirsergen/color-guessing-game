@@ -80,11 +80,17 @@ function App() {
           {message}
         </h1>
         <div className="score__container">
-          <h1>Score: {score}</h1>
-          <h1>Tries: {tryCount}</h1>
           <h1>
-            Success Rate:
-            {score > 0 ? ((score / tryCount) * 100).toFixed(0) : null}%
+            SCORE: <span>{score}</span>
+          </h1>
+          <h1>
+            TRIES: <span>{tryCount}</span>
+          </h1>
+          <h1>
+            SUCCESS RATE:
+            {score > 0 ? (
+              <span> {((score / tryCount) * 100).toFixed(0)}%</span>
+            ) : null}
           </h1>
         </div>
       </div>
